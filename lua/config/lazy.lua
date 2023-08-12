@@ -34,8 +34,8 @@ return function(opts)
           end,
           icons = {
             kinds = {
-              Codeium = " "
-            }
+              Codeium = " ",
+            },
           },
         },
       },
@@ -64,7 +64,7 @@ return function(opts)
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules
       { import = "lazyvim.plugins.extras.ui.edgy" },
-      { import = "lazyvim.plugins.extras.ui.mini-animate" },
+      -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
       -- lazyvim project extension modules
       { import = "lazyvim.plugins.extras.util.project" },
       -- import/override with your plugins

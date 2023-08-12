@@ -6,7 +6,7 @@ require("config.lazy")({
     -- cond = false,
   },
   nv = {
-    colorscheme = "onelight", -- colorscheme setting for either onedark.nvim or github-theme
+    colorscheme = "onedark", -- colorscheme setting for either onedark.nvim or github-theme
     codeium_support = false, -- enable codeium extension
     copilot_support = false, -- enable copilot extension
     coverage_support = true, -- enable coverage extension
@@ -16,7 +16,7 @@ require("config.lazy")({
       docker = true, -- enable docker extension
       elixir = false, -- enable elixir extension
       go = false, -- enable go extension
-      java = false, -- enable java extension
+      java = true, -- enable java extension
       nodejs = true, -- enable nodejs (typescript, css, html, json) extension
       python = true, -- enable python extension
       ruby = false, -- enable ruby extension
@@ -26,7 +26,7 @@ require("config.lazy")({
       yaml = true, -- enable yaml extension
     },
     rest_support = true, -- enable rest.nvim extension
-    test_support = true -- enable test extension
+    test_support = true, -- enable test extension
   },
   performance = {
     cache = {

@@ -10,3 +10,35 @@ if vim.fn.executable("btop") == 1 then
   -- btop
   vim.keymap.set("n", "<leader>xb", function() require("lazyvim.util").float_term({ "btop" }, { esc_esc = false, ctrl_hjkl = false }) end, { desc = "btop" })
 end
+
+local function map(mode, lhs, rhs, opts)
+  vim.keymap.set(mode, lhs, rhs, opts)
+  local keys = require("lazy.core.handler").handlers.keys
+  ---@cast keys LazyKeysHandler
+  -- do not create the keymap if a lazy keys handler exists
+  if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+    opts = opts or {}
+    opts.silent = opts.silent ~= false
+    if opts.remap and not vim.g.vscode then
+      opts.remap = nil
+    end
+  end
+end
+-- 设置option常量
+local opt = { noremap = true, silent = true }
+-- 关闭搜索高亮
+map({ 'n' }, '<leader>nh', ':nohlsearch<CR>', opt)
+-- search/replace
+map({ "n" }, "<A-r>", ":%s///g<left><left><left>", { noremap = true, silent = false })
+map({ "n" }, "<C-a>", "gg0vG$", opt)
+
+-- 在visual mode 里粘贴不要复制
+map({ "n", "v", "x" }, "p", '"_dp', opt)
+map({ "n", "v", "x" }, "P", '"_dP', opt)
+map({ "n", "v", "x" }, "gp", '"+p', opt)
+map({ "n", "v", "x" }, "gP", '"+P', opt)
+--   ma13456
+map({ "n" }, "n", "nzzzv", opt)
+map({ "n" }, "N", "Nzzzv", opt)
+map({ "n" }, "<C-u>", "<C-u>zz", opt)
+map({ "n" }, "<C-d>", "<C-d>zz", opt)
