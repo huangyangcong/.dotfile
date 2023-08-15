@@ -144,9 +144,9 @@ return {
   },
 
   -- git diff view
-  {
-    "sindrets/diffview.nvim",
-    cmd = "DiffviewOpen",
-  },
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   cmd = "DiffviewOpen",
+  -- },
 
 }

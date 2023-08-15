@@ -37,7 +37,7 @@ map({ "n", "v", "x" }, "p", '"_dp', opt)
 map({ "n", "v", "x" }, "P", '"_dP', opt)
 map({ "n", "v", "x" }, "gp", '"+p', opt)
 map({ "n", "v", "x" }, "gP", '"+P', opt)
---   ma13456
+
 map({ "n" }, "n", "nzzzv", opt)
 map({ "n" }, "N", "Nzzzv", opt)
 map({ "n" }, "<C-u>", "<C-u>zz", opt)
