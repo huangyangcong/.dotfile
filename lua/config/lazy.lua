@@ -63,7 +63,7 @@ return function(opts)
       -- lazyvim test core extension modules
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules
-      { import = "lazyvim.plugins.extras.ui.edgy" },
+      -- { import = "lazyvim.plugins.extras.ui.edgy" },
       -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
       -- lazyvim project extension modules
       { import = "lazyvim.plugins.extras.util.project" },
@@ -88,7 +88,7 @@ return function(opts)
       -- version = "*", -- try installing the latest stable version for plugins that support semver
     },
     install = { colorscheme = { "tokyonight", "habamax" } },
-    checker = { enabled = true }, -- automatically check for plugin updates
+    checker = { enabled = false }, -- automatically check for plugin updates
     performance = {
       cache = {
         enabled = true,
