@@ -33,10 +33,10 @@ map({ "n" }, "<A-r>", ":%s///g<left><left><left>", { noremap = true, silent = fa
 map({ "n" }, "<C-a>", "gg0vG$", opt)
 
 -- 在visual mode 里粘贴不要复制
-map({ "n", "v", "x" }, "p", '"_dp', opt)
-map({ "n", "v", "x" }, "P", '"_dP', opt)
-map({ "n", "v", "x" }, "gp", '"+p', opt)
-map({ "n", "v", "x" }, "gP", '"+P', opt)
+map({ "v", "x" }, "p", '"_dp', opt)
+map({ "v", "x" }, "P", '"_dP', opt)
+map({ "v", "x" }, "gp", '"+p', opt)
+map({ "v", "x" }, "gP", '"+P', opt)
 
 map({ "n" }, "n", "nzzzv", opt)
 map({ "n" }, "N", "Nzzzv", opt)
