@@ -188,4 +188,23 @@ return {
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
+  -- translate
+  {
+    "voldikss/vim-translator",
+    cmd = {
+        'Translate',
+        'TranslateH',
+        'TranslateL',
+        'TranslateR',
+        'TranslateW',
+        'TranslateX',
+    },
+    opts = function(_, opts)
+        vim.g.translator_history_enable = true
+    end,
+    keys = {
+      { "<leader>tlt", "<cmd>Translate<cr>", desc = "Translate" },
+      { "<leader>tlw", "<cmd>TranslateW<cr>", desc = "TranslateW" }
+    },
+  },
 }
