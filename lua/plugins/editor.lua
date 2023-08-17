@@ -203,8 +203,8 @@ return {
         vim.g.translator_history_enable = true
     end,
     keys = {
-      { "<leader>tlt", "<cmd>Translate<cr>", desc = "Translate" },
-      { "<leader>tlw", "<cmd>TranslateW<cr>", desc = "TranslateW" }
+      { "<leader>tlw", "<cmd>TranslateWV<cr>", desc = "Translate Current vision Word.", mode = { "v" } },
+      { "<leader>tlw", "<cmd>TranslateW<cr>", desc = "Translate Current Word." }
     },
   },
 }
