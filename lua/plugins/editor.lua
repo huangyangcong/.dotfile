@@ -210,4 +210,12 @@ return {
       { "<leader>tlw", "<Plug>TranslateW<cr>", desc = "Translate Current Word." }
     },
   },
+
+  -- switch input method automatically depending on mode
+  {
+    "keaising/im-select.nvim",
+    cond = jit.os == "Linux",
+    event = "VeryLazy",
+    opts = {},
+  },
 }
