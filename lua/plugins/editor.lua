@@ -193,10 +193,13 @@ return {
     "voldikss/vim-translator",
     cmd = {
         'Translate',
+        'TranslateV',
+        'TranslateW',
+        'TranslateWV',
+        'TranslateR',
+        'TranslateRV',
         'TranslateH',
         'TranslateL',
-        'TranslateR',
-        'TranslateW',
         'TranslateX',
     },
     config = function(_, opts)
