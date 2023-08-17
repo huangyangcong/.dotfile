@@ -35,3 +35,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>bdelete!<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- autoformat
+vim.b.autoformat = false
+-- Disable autoformat for lua files
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = { "lua" },
+--   callback = function()
+--     vim.b.autoformat = false
+--   end,
+-- })
