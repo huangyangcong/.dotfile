@@ -199,7 +199,7 @@ return {
         'TranslateW',
         'TranslateX',
     },
-    opts = function(_, opts)
+    config = function(_, opts)
         vim.g.translator_history_enable = true
     end,
     keys = {
