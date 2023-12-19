@@ -1,3 +1,15 @@
+local Util = require("lazyvim.util")
+local File = require("utils.file")
+Util.root_patterns = { ".git" }
+
+local find_files_command = { "rg", "--files", "--hidden", "-g", "!{node_modules,.git}" }
+
+local function get_visual()
+  local _, ls, cs = unpack(vim.fn.getpos("v"))
+  local _, le, ce = unpack(vim.fn.getpos("."))
+  return vim.api.nvim_buf_get_text(0, ls - 1, cs - 1, le - 1, ce, {})
+end
+
 return {
 
   -- disable mini.bufremove
@@ -35,6 +47,51 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
+      commands = {
+        copy_selector = function(state)
+          local node = state.tree:get_node()
+          local filepath = node:get_id()
+          local filename = node.name
+          local modify = vim.fn.fnamemodify
+
+          local vals = {
+            ["BASENAME"] = modify(filename, ":r"),
+            ["EXTENSION"] = modify(filename, ":e"),
+            ["FILENAME"] = filename,
+            ["PATH (CWD)"] = modify(filepath, ":."),
+            ["PATH (HOME)"] = modify(filepath, ":~"),
+            ["PATH"] = filepath,
+            ["URI"] = vim.uri_from_fname(filepath),
+          }
+
+          local options = vim.tbl_filter(function(val)
+            return vals[val] ~= ""
+          end, vim.tbl_keys(vals))
+          if vim.tbl_isempty(options) then
+            vim.notify("No values to copy", vim.log.levels.WARN)
+            return
+          end
+          table.sort(options)
+          vim.ui.select(options, {
+            prompt = "Choose to copy to clipboard:",
+            format_item = function(item)
+              return ("%s: %s"):format(item, vals[item])
+            end,
+          }, function(choice)
+            local result = vals[choice]
+            if result then
+              vim.notify(("Copied: `%s`"):format(result))
+              vim.fn.setreg("+", result)
+              vim.fn.setreg("*", result)
+            end
+          end)
+        end,
+      },
+      window = {
+        mappings = {
+          Y = "copy_selector",
+        },
+      },
       close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       filesystem = {
         follow_current_file = {
@@ -46,6 +103,51 @@ return {
       },
     },
   },
+
+  -- ====for live_grep raw====:
+  -- for rg usage: reference: https://segmentfault.com/a/1190000016170184
+  -- -i ignore case
+  -- -s 大小写敏感
+  -- -w match word
+  -- -e 正则表达式匹配
+  -- -v 反转匹配
+  -- -g 通配符文件或文件夹，可以用!来取反
+  -- -F fixed-string 原意字符串，类似python的 r'xxx'
+
+  -- examples:
+  -- command	Description
+  -- rg image utils.py	Search in a single file utils.py
+  -- rg image src/	Search in dir src/ recursively
+  -- rg image	Search image in current dir recursively
+  -- rg '^We' test.txt	Regex searching support (lines starting with We)
+  -- rg -i image	Search image and ignore case (case-insensitive search)
+  -- rg -s image	Smart case search
+  -- rg -F '(test)'	Search literally, i.e., without using regular expression
+  -- rg image -g '*.py'	File globing (search in certain files), can be used multiple times
+  -- rg image -g '!*.py'	Negative file globing (do not search in certain files)
+  -- rg image --type py or rg image -tpy1	Search image in Python file
+  -- rg image -Tpy	Do not search image in Python file type
+  -- rg -l image	Only show files containing image (Do not show the lines)
+  -- rg --files-without-match image	Show files not containing image
+  -- rg -v image	Inverse search (search files not containing image)
+  -- rg -w image	Search complete word
+  -- rg --count	Show the number of matching lines in a file
+  -- rg --count-matches	Show the number of matchings in a file
+  -- rg neovim --stats	Show the searching stat (how many matches, how many files searched etc.)
+
+  -- ====for fzf search=====
+  -- Token	Match type	Description
+  -- sbtrkt	fuzzy-match	Items that match sbtrkt
+  -- 'wild	exact-match (quoted)	Items that include wild
+  -- ^music	prefix-exact-match	Items that start with music
+  -- .mp3$	suffix-exact-match	Items that end with .mp3
+  -- !fire	inverse-exact-match	Items that do not include fire
+  -- !^music	inverse-prefix-exact-match	Items that do not start with music
+  -- !.mp3$	inverse-suffix-exact-match	Items that do not end with .mp3
+
+  -- A single bar character term acts as an OR operator.
+  -- For example, the following query matches entries that start with core and end with either go, rb, or py.
+  -- ^core go$ | rb$ | py$
 
   -- customize telescope
   {
@@ -59,9 +161,57 @@ return {
     keys = {
       {
         "<leader>fs",
-        "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
-        desc = "Find String"
-      }
+        function()
+          local ext = File.get_cur_file_extension()
+          if ext then
+            require("telescope").extensions.live_grep_args.live_grep_args({
+              -- default_text='-g * ' .. vim.fn.expand('<cword>')
+              default_text = "-g *" .. ext .. " ",
+            })
+          else
+            require("telescope").extensions.live_grep_args.live_grep_args({
+              -- default_text='-g * ' .. vim.fn.expand('<cword>')
+              default_text = "-g * ",
+            })
+          end
+        end,
+        desc = "Find String",
+      },
+      {
+        "<leader>fs",
+        function()
+          local ext = File.get_cur_file_extension()
+          if ext then
+            require("telescope").extensions.live_grep_args.live_grep_args({
+              default_text = "-g *" .. ext .. " " .. get_visual()[1],
+            })
+          else
+            require("telescope").extensions.live_grep_args.live_grep_args()
+          end
+        end,
+        desc = "Find String",
+        mode = { "x" },
+      },
+      {
+        "<leader><space>",
+        Util.telescope("find_files"),
+        desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>/",
+        Util.telescope("live_grep", { find_command = find_files_command }),
+        desc = "Grep (root dir)",
+      },
+      {
+        "<leader>ff",
+        Util.telescope("find_files", { find_command = find_files_command }),
+        desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>fF",
+        Util.telescope("find_files", { cwd = false, find_command = find_files_command }),
+        desc = "Find Files (re. Git root)",
+      },
     },
     opts = {
       defaults = {
@@ -71,10 +221,22 @@ return {
         layout_config = {
           vertical = {
             preview_cutoff = 0.2,
-            preview_height = 0.4
+            preview_height = 0.4,
           },
           height = 0.9,
-          width = 0.9
+          width = 0.9,
+        },
+        file_ignore_patterns = {
+          "target/*",
+          "node_modules/*",
+          "dist/*",
+          "build/*",
+          "codegen/*",
+          "generated/*",
+          "tmp/*",
+          "^.git/*",
+          "^.yarn/*",
+          "^.gradle/*",
         },
         mappings = {
           i = {
@@ -86,7 +248,7 @@ return {
             end,
             ["<C-p>"] = function(...)
               return require("telescope.actions.layout").toggle_preview(...)
-            end
+            end,
           },
           n = {
             ["j"] = function(...)
@@ -103,8 +265,8 @@ return {
             end,
             ["<C-p>"] = function(...)
               return require("telescope.actions.layout").toggle_preview(...)
-            end
-          }
+            end,
+          },
         },
       },
       extensions = {
@@ -116,6 +278,10 @@ return {
             preview_height = 0.4,
           },
         },
+        live_grep_args = {
+          vimgrep_arguments = find_command,
+          auto_quoting = true, -- enable/disable auto-quoting
+        },
       },
     },
     config = function(_, opts)
@@ -124,6 +290,7 @@ return {
       telescope.load_extension("dap")
       telescope.load_extension("fzf")
       telescope.load_extension("undo")
+      telescope.load_extension("live_grep_args")
     end,
   },
 
@@ -192,22 +359,22 @@ return {
   {
     "voldikss/vim-translator",
     cmd = {
-        'Translate',
-        'TranslateV',
-        'TranslateW',
-        'TranslateWV',
-        'TranslateR',
-        'TranslateRV',
-        'TranslateH',
-        'TranslateL',
-        'TranslateX',
+      "Translate",
+      "TranslateV",
+      "TranslateW",
+      "TranslateWV",
+      "TranslateR",
+      "TranslateRV",
+      "TranslateH",
+      "TranslateL",
+      "TranslateX",
     },
     config = function(_, opts)
-        vim.g.translator_history_enable = true
+      vim.g.translator_history_enable = true
     end,
     keys = {
       { "<leader>tlw", "<Plug>TranslateWV<cr>", desc = "Translate Current vision Word.", mode = { "v" } },
-      { "<leader>tlw", "<Plug>TranslateW<cr>", desc = "Translate Current Word." }
+      { "<leader>tlw", "<Plug>TranslateW<cr>", desc = "Translate Current Word." },
     },
   },
 
@@ -217,5 +384,36 @@ return {
     cond = jit.os == "Linux",
     event = "VeryLazy",
     opts = {},
+  },
+  {
+    "johmsalas/text-case.nvim",
+    opts = {},
+    config = function(_, opts)
+      local textcase = require("textcase")
+      local wk = require("which-key")
+
+      local function convert_current_word(dest_case)
+        return function()
+          textcase.current_word(dest_case)
+        end
+      end
+
+      wk.register({
+        t = {
+          name = "text-case",
+          u = { convert_current_word("to_upper_case"), "TO UPPER" },
+          l = { convert_current_word("to_lower_case"), "to lower" },
+          s = { convert_current_word("to_snake_case"), "to_snake" },
+          ["-"] = { convert_current_word("to_dash_case"), "to-dash" },
+          C = { convert_current_word("to_constant_case"), "TO_CONSTANT" },
+          d = { convert_current_word("to_dot_case"), "to.dot" },
+          p = { convert_current_word("to_phrase_case"), "To phrase" },
+          c = { convert_current_word("to_camel_case"), "toCamel" },
+          P = { convert_current_word("to_pascal_case"), "ToPascal" },
+          t = { convert_current_word("to_title_case"), "To Title" },
+          ["/"] = { convert_current_word("to_path_case"), "to/path" },
+        },
+      }, { prefix = "g", mode = { "n", "x", "o" } })
+    end,
   },
 }
