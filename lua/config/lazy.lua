@@ -60,6 +60,7 @@ return function(opts)
       { import = "lazyvim.plugins.extras.lang.terraform", enabled = opts.nv.lang.terraform },
       { import = "lazyvim.plugins.extras.lang.tex", enabled = opts.nv.lang.tex },
       { import = "lazyvim.plugins.extras.lang.yaml", enabled = opts.nv.lang.yaml },
+      { import = "lazyvim.plugins.extras.lsp.none-ls", enabled = opts.nv.lsp.nonels },
       -- lazyvim test core extension modules
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules

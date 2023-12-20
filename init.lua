@@ -25,6 +25,9 @@ require("config.lazy")({
       tex = false, -- enable tex extension
       yaml = true, -- enable yaml extension
     },
+    lsp = {
+      nonels = true,
+    },
     rest_support = true, -- enable rest.nvim extension
     test_support = true, -- enable test extension
   },
