@@ -380,12 +380,12 @@ return {
   },
 
   -- switch input method automatically depending on mode
-  {
-    "keaising/im-select.nvim",
-    cond = jit.os == "Linux",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "keaising/im-select.nvim",
+  --   cond = jit.os == "Linux",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
   {
     "johmsalas/text-case.nvim",
     opts = {},
