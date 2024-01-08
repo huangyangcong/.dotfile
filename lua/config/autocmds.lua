@@ -40,9 +40,9 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
   command = "normal! ggvG:s/\r//e<CR>",
-  callback = function()
+  --callback = function()
     -- 无需在这里写命令，因为在 `command` 字段已经指定了
-  end,
+  --end,
 })
 
 
