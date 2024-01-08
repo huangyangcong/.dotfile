@@ -36,16 +36,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- 自动删除粘贴后缀^M
-vim.api.nvim_create_autocmd("TextYankPost", {
-  pattern = "*",
-  command = "normal! ggvG:s/\r//e<CR>",
-  --callback = function()
-    -- 无需在这里写命令，因为在 `command` 字段已经指定了
-  --end,
-})
-
-
 -- autoformat-- autoformat-- autoformat-- autoformat-- autoformat-- autoformat-- autoformat
 vim.b.autoformat = false
 -- Disable autoformat for lua files
