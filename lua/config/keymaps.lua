@@ -2,13 +2,22 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 if vim.fn.executable("gitui") == 1 then
   -- gitui instead of lazygit
-  vim.keymap.set("n", "<leader>gG", function() require("lazyvim.util").float_term({ "gitui" }, { esc_esc = false, ctrl_hjkl = false }) end, { desc = "gitui (cwd)" })
-  vim.keymap.set("n", "<leader>gg", function() require("lazyvim.util").float_term({ "gitui" }, { cwd = require("lazyvim.util").get_root(), esc_esc = false, ctrl_hjkl = false }) end, { desc = "gitui (root dir)" })
+  vim.keymap.set("n", "<leader>gG",
+    function() require("lazyvim.util").float_term({ "gitui" }, { esc_esc = false, ctrl_hjkl = false }) end,
+    { desc = "gitui (cwd)" })
+  vim.keymap.set("n", "<leader>gg",
+    function()
+      require("lazyvim.util").float_term({ "gitui" },
+        { cwd = require("lazyvim.util").get_root(), esc_esc = false, ctrl_hjkl = false })
+    end,
+    { desc = "gitui (root dir)" })
 end
 
 if vim.fn.executable("btop") == 1 then
   -- btop
-  vim.keymap.set("n", "<leader>xb", function() require("lazyvim.util").float_term({ "btop" }, { esc_esc = false, ctrl_hjkl = false }) end, { desc = "btop" })
+  vim.keymap.set("n", "<leader>xb",
+    function() require("lazyvim.util").float_term({ "btop" }, { esc_esc = false, ctrl_hjkl = false }) end,
+    { desc = "btop" })
 end
 
 local function map(mode, lhs, rhs, opts)
@@ -33,8 +42,10 @@ map({ "n" }, "<C-a>", "gg0vG$", opt)
 -- search/replace
 map({ "n" }, "<A-r>", ":%s///g<left><left><left>", { noremap = true, silent = false })
 map({ "v" }, "<A-r>", [[y:%s`<C-R>"``g<left><left>]], { noremap = true, silent = false })
-map({ "n" }, "<leader>r", [[:%s:\v::g<Left><Left><Left>]], { noremap = true, silent = false, desc = 'Global RegEx substitute.' } )
-map({ "x" }, "<leader>r", [[:s:\v::g<Left><Left><Left>]], { noremap = true, silent = false, desc = 'RegEx substitute within selection.' })
+map({ "n" }, "<leader>r", [[:%s:\v::g<Left><Left><Left>]],
+  { noremap = true, silent = false, desc = 'Global RegEx substitute.' })
+map({ "x" }, "<leader>r", [[:s:\v::g<Left><Left><Left>]],
+  { noremap = true, silent = false, desc = 'RegEx substitute within selection.' })
 
 -- 在visual mode 粘贴不复制
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
@@ -60,3 +71,18 @@ map({ "n" }, "n", "nzzzv", opt)
 map({ "n" }, "N", "Nzzzv", opt)
 map({ "n" }, "<C-u>", "<C-u>zz", opt)
 map({ "n" }, "<C-d>", "<C-d>zz", opt)
+
+--快速移动
+-- Insert mode
+-- Go to the beginning and end of current line in insert mode quickly
+map({ "i" }, "<C-a>", "<Home>")
+map({ "i" }, "<C-e>", "<End>")
+map({ "i" }, "<C-n>", "<Down>")
+map({ "i" }, "<C-p>", "<Up>")
+map({ "i" }, "<C-f>", "<Right>")
+map({ "i" }, "<C-b>", "<Left>")
+
+
+-- command line
+map({ "c" }, "<C-f>", "<Right>")
+map({ "c" }, "<C-b>", "<Left>")
