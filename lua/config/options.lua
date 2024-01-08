@@ -28,12 +28,15 @@ vim.opt.clipboard = { "unnamed", "unnamedplus" } -- use the system clipboard
 
 -- translate
 vim.g.translator_target_lang = "zh"
-vim.g.translator_default_engines = {  'youdao', 'bing', 'haici'}
+vim.g.translator_default_engines = { 'youdao', 'bing', 'haici' }
 -- vim.g.translator_window_max_width = 200
 -- vim.g.translator_window_max_height = 0.8
 
-vim.opt.smartcase = true -- ignore case only with lowercase letters
-vim.opt.wrap = true -- enable soft wrapping at the edge of the screen
+vim.opt.smartcase = true  -- ignore case only with lowercase letters
+vim.opt.wrap = true       -- enable soft wrapping at the edge of the screen
 vim.opt.linebreak = false -- don't wrap in the middle of a word
 -- 光标在行首尾时<Left><Right>可以跳到下一行
 vim.opt.whichwrap = vim.o.whichwrap .. "<,>,[,],h,l"
+
+-- to remove the ^M character at the end of each line
+vim.opt.fileformat = "unix"
