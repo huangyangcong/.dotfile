@@ -61,6 +61,7 @@ return function(opts)
       { import = "lazyvim.plugins.extras.lang.tex", enabled = opts.nv.lang.tex },
       { import = "lazyvim.plugins.extras.lang.yaml", enabled = opts.nv.lang.yaml },
       { import = "lazyvim.plugins.extras.lsp.none-ls", enabled = opts.nv.lsp.nonels },
+      { import = "lazyvim.plugins.extras.formatting.prettier", enabled = opts.nv.format.prettier  },
       -- lazyvim test core extension modules
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules
