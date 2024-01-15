@@ -45,8 +45,6 @@ return {
           "html-lsp",
           "stylelint-lsp",
           "typescript-language-server",
-          "prettier",
-          "prettierd",
         })
       end
     end,
