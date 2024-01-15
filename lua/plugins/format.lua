@@ -9,12 +9,6 @@ return {
         -- ["javascript"] = { { "prettierd", "prettier" } },
         -- ["typescript"] = { { "prettierd", "prettier" } },
       }
-      opts.format_on_save = {
-        -- async = true, -- This isn't going to do anything. format_on_save is necessarily sync
-        -- If you want async formatting, use format_after_save
-        timeout_ms = 10000,
-        lsp_fallback = true,
-      }
       opts.log_level = vim.log.levels.DEBUG
       -- This autocmd is where you're getting into trouble. If you're using format_on_save,
       -- you don't need this. It's using the default timeout of 1000ms, which is probably
