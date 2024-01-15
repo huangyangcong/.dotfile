@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    config = function(_, opts)
+    opts = function(_, opts)
       opts.formatters_by_ft = {
         -- prefer prettierd than prettier for faster format
         -- awared about https://github.com/LazyVim/LazyVim/issues/712
