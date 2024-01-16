@@ -388,10 +388,17 @@ return {
   -- },
   {
     "johmsalas/text-case.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "folke/which-key.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
     opts = {},
-    config = function(_, opts)
+    config = function()
+      require("textcase").setup({})
+      require("telescope").load_extension("textcase")
       local textcase = require("textcase")
-      local wk = require("which-key")
 
       local function convert_current_word(dest_case)
         return function()
@@ -399,7 +406,7 @@ return {
         end
       end
 
-      wk.register({
+      require("which-key").register({
         t = {
           name = "text-case",
           u = { convert_current_word("to_upper_case"), "TO UPPER" },
