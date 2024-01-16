@@ -47,6 +47,9 @@ return function(opts)
       { import = "lazyvim.plugins.extras.dap.core", enabled = opts.nv.dap_support },
       -- debugger specific extension modules
       { import = "lazyvim.plugins.extras.dap.nlua", enabled = opts.nv.lang.lua },
+
+      { import = "lazyvim.plugins.extras.lsp.none-ls", enabled = opts.nv.lsp.nonels },
+      { import = "lazyvim.plugins.extras.formatting.prettier", enabled = opts.nv.format.prettier },
       -- core language specific extension modules
       { import = "lazyvim.plugins.extras.lang.clangd", enabled = opts.nv.lang.clangd },
       { import = "lazyvim.plugins.extras.lang.cmake", enabled = opts.nv.lang.clangd },
@@ -60,8 +63,6 @@ return function(opts)
       { import = "lazyvim.plugins.extras.lang.terraform", enabled = opts.nv.lang.terraform },
       { import = "lazyvim.plugins.extras.lang.tex", enabled = opts.nv.lang.tex },
       { import = "lazyvim.plugins.extras.lang.yaml", enabled = opts.nv.lang.yaml },
-      { import = "lazyvim.plugins.extras.lsp.none-ls", enabled = opts.nv.lsp.nonels },
-      { import = "lazyvim.plugins.extras.formatting.prettier", enabled = opts.nv.format.prettier  },
       -- lazyvim test core extension modules
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules

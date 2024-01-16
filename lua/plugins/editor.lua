@@ -43,7 +43,7 @@ return {
     },
   },
 
-  -- customize file explorer
+  -- customize file explorer 增加Y复制文件夹名称或文件路径
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {

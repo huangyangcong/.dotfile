@@ -21,13 +21,13 @@ return {
     opts = {},
   },
 
-  -- tidy
+  -- tidy 删除 EOF 处的尾随空格和空行。
   {
     "mcauley-penney/tidy.nvim",
     event = "VeryLazy",
     opts = {
       filetype_exclude = { "markdown", "diff" },
-    }
+    },
   },
 
   -- treesitter
@@ -50,10 +50,9 @@ return {
           "jq",
           "make",
           "mermaid",
-          "sql"
+          "sql",
         })
       end
-    end
+    end,
   },
-
 }
