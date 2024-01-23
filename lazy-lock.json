@@ -5,6 +5,7 @@
   "SchemaStore.nvim": { "branch": "main", "commit": "84f22450913d05da3e7c5488a9761e1034fb43b6" },
   "asyncrun.vim": { "branch": "master", "commit": "61cc3081963a12048e00e89f8cedc8bd1cb83b8c" },
   "asynctasks.vim": { "branch": "master", "commit": "851da4282ffb2ce3d5e4c2f70d2d09da7839d48f" },
+  "bigfile.nvim": { "branch": "main", "commit": "33eb067e3d7029ac77e081cfe7c45361887a311a" },
   "bufdelete.nvim": { "branch": "master", "commit": "07d1f8ba79dec59d42b975a4df1c732b2e4e37b4" },
   "bufferline.nvim": { "branch": "main", "commit": "99f0932365b34e22549ff58e1bea388465d15e99" },
   "clangd_extensions.nvim": { "branch": "main", "commit": "34c8eaa12be192e83cd4865ce2375e9f53e728f2" },
