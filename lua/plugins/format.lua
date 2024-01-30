@@ -12,6 +12,10 @@ return {
       --     require("conform").format({ bufnr = args.buf })
       --   end,
       -- })
+      opts.formatters.clangformat = {
+        command = "clang-format",
+        args = { "-style=file:~/workspace/tools/.clang-format" },
+      }
     end,
   },
 }
