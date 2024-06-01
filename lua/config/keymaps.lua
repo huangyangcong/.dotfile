@@ -54,7 +54,6 @@ map(
   [[:s:\v::g<Left><Left><Left>]],
   { noremap = true, silent = false, desc = "RegEx substitute within selection." }
 )
-
 -- 在visual mode 粘贴不复制
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 -- unnamedplus
@@ -83,17 +82,9 @@ map({ "n" }, "<C-d>", "<C-d>zz", opt)
 --快速移动
 -- Insert mode
 -- Go to the beginning and end of current line in insert mode quickly
-map({ "i" }, "<C-a>", "<Home>")
-map({ "i" }, "<C-e>", "<End>")
-map({ "i" }, "<C-n>", "<Down>")
-map({ "i" }, "<C-p>", "<Up>")
-map({ "i" }, "<C-f>", "<Right>")
-map({ "i" }, "<C-b>", "<Left>")
-
--- command line
-map({ "c" }, "<C-a>", "<Home>")
-map({ "c" }, "<C-e>", "<End>")
-map({ "c" }, "<C-n>", "<Down>")
-map({ "c" }, "<C-p>", "<Up>")
-map({ "c" }, "<C-f>", "<Right>")
-map({ "c" }, "<C-b>", "<Left>")
+map({ "i", "c" }, "<C-a>", "<Home>")
+map({ "i", "c" }, "<C-e>", "<End>")
+map({ "i", "c" }, "<C-n>", "<Down>")
+map({ "i", "c" }, "<C-p>", "<Up>")
+map({ "i", "c" }, "<C-f>", "<Right>")
+map({ "i", "c" }, "<C-b>", "<Left>")
